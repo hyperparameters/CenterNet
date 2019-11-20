@@ -35,12 +35,19 @@ def main(opt):
   
   print('Creating model...')
   model = create_model(opt.arch, opt.heads, opt.head_conv)
-  optimizer = torch.optim.Adam(model.parameters(), opt.lr)
+  
   start_epoch = 0
   if opt.load_model != '':
     model, optimizer, start_epoch = load_model(
       model, opt.load_model, optimizer, opt.resume, opt.lr, opt.lr_step)
-
+  if opt.optimizer == "Adam":
+    optimizer = torch.optim.Adam(model.parameters(), opt.lr)
+  elif opt.optimizer == "SGD":
+    optimizer = torch.optim.SGD(model.params,opts.lr)
+  elif opt.optimizer == "RMSprop":
+    optimizer = torch.optim.RMSprop(model.params,opts.lr)
+  
+  
   Trainer = train_factory[opt.task]
   trainer = Trainer(opt, model, optimizer)
   trainer.set_device(opt.gpus, opt.chunk_sizes, opt.device)
