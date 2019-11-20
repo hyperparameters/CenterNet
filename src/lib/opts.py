@@ -98,6 +98,8 @@ class opts(object):
     self.parser.add_argument('--trainval', action='store_true',
                              help='include validation in training and '
                                   'test on test set')
+    self.parser.add_argument('--optimizer', default='',
+                             help=' empty for last model or Adam. options SGD | Adam | RMSprop')                            
     self.parser.add_argument('--bucket_path', default='',
                              help='path to cloud bucket location for saving weights')
 
