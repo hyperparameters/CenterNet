@@ -21,7 +21,7 @@ class Human(data.Dataset):
   def __init__(self, opt, split):
     super(Human, self).__init__()
     self.data_dir = os.path.join(opt.data_dir, 'coco')
-    self.img_dir = os.path.join(self.data_dir, '{}2017'.format(split))
+    self.img_dir = os.path.join(self.data_dir, '{}2017'.format(split),"images")
     if split == 'test':
       self.annot_path = os.path.join(
           self.data_dir, 'annotations', 
