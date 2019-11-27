@@ -123,6 +123,7 @@ class opts(object):
                                   ' during validation.')
 
     # dataset
+    
     self.parser.add_argument('--not_rand_crop', action='store_true',
                              help='not use the random crop data augmentation'
                                   'from CornerNet.')
@@ -354,7 +355,11 @@ class opts(object):
                 'mhp' : 
                      {'default_resolution': [512, 512], 'num_classes': 58, 
                       'mean': [0.408, 0.447, 0.470], 'std': [0.289, 0.274, 0.278],
-                      'dataset': 'mhp'} 
+                      'dataset': 'mhp'},
+                'human':
+                   {'default_resolution': [512, 512], 'num_classes': 1, 
+                      'mean': [0.408, 0.447, 0.470], 'std': [0.289, 0.274, 0.278],
+                      'dataset': 'human'}
                },
 
       'exdet': {'default_resolution': [512, 512], 'num_classes': 80, 

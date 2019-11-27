@@ -13,6 +13,7 @@ from .dataset.mhp import MHP
 from .dataset.pascal import PascalVOC
 from .dataset.kitti import KITTI
 from .dataset.coco_hp import COCOHP
+from .dataset.human import Human
 
 
 dataset_factory = {
@@ -21,7 +22,8 @@ dataset_factory = {
   'kitti': KITTI,
   'coco_hp': COCOHP,
   'mhp_hf':HF,
-  'mhp':MHP
+  'mhp':MHP,
+  'human':Human
 }
 
 _sample_factory = {
