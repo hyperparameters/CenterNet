@@ -359,7 +359,11 @@ class opts(object):
                 'human':
                    {'default_resolution': [512, 512], 'num_classes': 1, 
                       'mean': [0.408, 0.447, 0.470], 'std': [0.289, 0.274, 0.278],
-                      'dataset': 'human'}
+                      'dataset': 'human'},
+                'face':
+                   {'default_resolution': [512, 512], 'num_classes': 1, 
+                      'mean': [0.408, 0.447, 0.470], 'std': [0.289, 0.274, 0.278],
+                      'dataset': 'face'}
                },
 
       'exdet': {'default_resolution': [512, 512], 'num_classes': 80, 

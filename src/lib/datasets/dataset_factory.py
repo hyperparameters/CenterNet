@@ -14,7 +14,7 @@ from .dataset.pascal import PascalVOC
 from .dataset.kitti import KITTI
 from .dataset.coco_hp import COCOHP
 from .dataset.human import Human
-
+from .dataset.face import Face
 
 dataset_factory = {
   'coco': COCO,
@@ -23,7 +23,8 @@ dataset_factory = {
   'coco_hp': COCOHP,
   'mhp_hf':HF,
   'mhp':MHP,
-  'human':Human
+  'human':Human,
+  'face':Face
 }
 
 _sample_factory = {
