@@ -66,8 +66,10 @@ class Debugger(object):
       self.names = mhp_hf_class_name
     elif num_classes ==58 or dataset =='mhp':
       self.names = mhp_class_name
-    elif num_classes == 1 or dataset == 'human':
+    elif dataset == 'human':
       self.names = ['human']
+    elif dataset == 'face':
+      self.names = ['face'] 
     num_classes = len(self.names)
     self.down_ratio=down_ratio
     # for bird view
