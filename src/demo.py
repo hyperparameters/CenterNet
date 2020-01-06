@@ -105,6 +105,6 @@ def save_json():
     
 if __name__ == '__main__':
   opt = opts().init()
-  if not os.isdir(outpath):
+  if not os.path.isdir(outpath):
     os.path.mkdir(outpath)
   demo(opt)
