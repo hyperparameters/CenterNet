@@ -89,7 +89,7 @@ def save_image(image,name):
   print("imaged saved : {}".format(name))
 
 def create_json(result,name):
-
+  global show_class
   if len(show_class)==0:
     show_class = range(1,opt.num_classes)
   det = []  
