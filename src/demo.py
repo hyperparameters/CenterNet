@@ -62,7 +62,7 @@ def demo(opt):
       name = os.path.basename(image_name).split(".")[0]
       
       create_json(result,name)
-      image = create_bbox(result,image
+      image = create_bbox(result,image)
       save_image(image,name)
       
       
