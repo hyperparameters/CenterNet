@@ -6,7 +6,8 @@ import _init_paths
 
 import os
 import cv2
-
+import json
+import numpy as np
 from opts import opts
 from detectors.detector_factory import detector_factory
 detection_json = dict()
@@ -76,33 +77,41 @@ def demo(opt):
     save_json()
 
 def create_bbox(result,image):
+  global show_class
   if len(show_class)==0:
     show_class = range(1,opt.num_classes)  
+
+  colors = np.random.randint(0,255,size=(len(show_class),3))
+  print(colors.shape)
+  #print(co)
   for i in show_class:
     for bbox in result[i]:
       if bbox[4]>= opt.vis_thresh:
-        cv2.rectangle(image,(bbox[0],bbox[1]),(bbox[2],bbox[3]),color[i],2)
+        print(tuple(colors[i]))
+        #color = tuple(colors[i])
+        cv2.rectangle(image,(bbox[0],bbox[1]),(bbox[2],bbox[3]),(217, 1, 250),2)
   return image
   
 def save_image(image,name):
-  cv2.imwrite(os.path.join(outpath,name+".jpg"),image)
-  print("imaged saved : {}".format(name))
+  outpath_image = os.path.join(outpath,name+".jpg")
+  cv2.imwrite(outpath_image,image)
+  print("imaged saved : {}".format(outpath_image))
 
 def create_json(result,name):
-  global show_class
+  global show_class,detection_json
   if len(show_class)==0:
     show_class = range(1,opt.num_classes)
   det = []  
   for i in show_class:
     for bbox in result[i]:
-      det.append({bbox[4] : bbox[:4].tolist()})
+      det.append({str(bbox[4]) : bbox[:4].tolist()})
 
   #add detections to dictionary
-  detections_json[name] = det
+  detection_json[str(name)] = det
  
 def save_json():
   with open("detections.json","w") as f:
-    f.write(json.dumps(detections_json))
+    f.write(json.dumps(detection_json))
     print("json results saved")
     
 if __name__ == '__main__':
@@ -110,3 +119,4 @@ if __name__ == '__main__':
   if not os.path.isdir(outpath):
     os.mkdir(outpath)
   demo(opt)
+
