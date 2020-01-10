@@ -82,7 +82,7 @@ def create_bbox(result,image):
     show_class = range(1,opt.num_classes)  
 
   colors = np.random.randint(0,255,size=(len(show_class),3))
-  print(colors.shape)
+  #print(colors.shape)
   #print(co)
   for i in show_class:
     for bbox in result[i]:
