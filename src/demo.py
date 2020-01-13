@@ -54,7 +54,7 @@ def demo(opt):
     inpath = os.path.dirname(image_names[0])
 
     #create output at same directory
-    outpath = outpath + inpath
+    outpath = os.path.join(outpath,inpath)
     if not os.path.isdir(outpath):
       os.makedirs(outpath)
       
@@ -87,9 +87,12 @@ def create_bbox(result,image):
   for i in show_class:
     for bbox in result[i]:
       if bbox[4]>= opt.vis_thresh:
-        print(tuple(colors[i]))
+        #print(tuple(colors[i]))
         #color = tuple(colors[i])
+        
         cv2.rectangle(image,(bbox[0],bbox[1]),(bbox[2],bbox[3]),(217, 1, 250),2)
+        cv2.rectangle(image,(int(bbox[0]),int(bbox[1]-10)),(int(bbox[2]),int(bbox[1])),(217, 1, 250),-1)
+        cv2.putText(image,str(np.round(bbox[4],2)),(int(bbox[0]),int(bbox[1])),cv2.FONT_HERSHEY_SIMPLEX,0.5,(255,255,255),2)
   return image
   
 def save_image(image,name):
@@ -119,4 +122,5 @@ if __name__ == '__main__':
   if not os.path.isdir(outpath):
     os.mkdir(outpath)
   demo(opt)
+
 
