@@ -19,6 +19,7 @@ def get_fg_mask(frame)
     #frame = cv2.resize(frame, (1080,720))
     
     # bg model
+    frame = cv2.GaussianBlur(frame,(17,17),0)
     fgMask = backSub.apply(frame,1)
 
 
