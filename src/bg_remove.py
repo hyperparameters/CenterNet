@@ -9,12 +9,12 @@ delta_thresh = 100
 backSub = cv2.createBackgroundSubtractorMOG2()
 backSub = cv2.createBackgroundSubtractorKNN()
 
-fgMask = backSub.apply(bg)
+#fgMask = backSub.apply(bg)
 
 kernel_erode = np.ones((3,3),np.uint8)
 kernel_dilate = np.ones((7,7),np.uint8)
 
-def get_fg_mask(frame)
+def get_fgmask(frame):
     #frame= cv2.imread(src+frame_name)
     #frame = cv2.resize(frame, (1080,720))
     
@@ -31,7 +31,7 @@ def get_fg_mask(frame)
     dilated = cv2.dilate(eroded, kernel_dilate, iterations=2)
 
     thresh = dilated
-    cnts,he = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+    cnts,he = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)[-2:]
 
     activity = False
     # loop over the contours
@@ -62,15 +62,35 @@ def get_fg_mask(frame)
 
     #if frame_no%200==0:
 #     cv2.imwrite("fg_masks/"+frame_name,thresh)
-    return dilated
-
+    fgmask = cv2.GaussianBlur(dilated,(7,7),0)
+    fgmask = np.stack([fgmask,fgmask,fgmask],axis=-1)
+    return fgmask
+    
+    
+def add_noise(image):
+    row,col,ch= image.shape
+    mean = 0
+    var = 0.1
+    sigma = var**0.5
+    gauss = np.random.normal(mean,sigma,(row,col,ch))
+    gauss = gauss.reshape(row,col,ch)
+    noisy = image * 0.5 + gauss * 0.5
+    
+    return noisy.astype("uint8")
+      
+      
 def sub_bg(frame,fgmask):
     fg_mask_exp  = cv2.dilate(fgmask,np.ones((91,91),dtype="uint8"),10)
-    
+        
+    #import pdb
+    #pdb.set_trace()
     bg_deg = frame.copy()
     fg_enh = frame.copy()
 
-    bg_deg  = cv2.convertScaleAbs(bg_deg, alpha=0, beta=100)
+    bg_deg  = cv2.convertScaleAbs(bg_deg, alpha=0.8, beta=90)
+    bg_deg = cv2.GaussianBlur(bg_deg,(39,39),0)
+    bg_deg = add_noise(bg_deg)
+    
     fg_enh  = cv2.convertScaleAbs(fg_enh, alpha=1.5, beta=0)
 
     # clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
