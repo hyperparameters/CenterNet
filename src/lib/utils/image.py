@@ -228,3 +228,18 @@ def color_aug(data_rng, image, eig_val, eig_vec):
     for f in functions:
         f(data_rng, image, gs, gs_mean, 0.4)
     lighting_(data_rng, image, 0.1, eig_val, eig_vec)
+
+def randomgamma(image,g=0.8,p=0.6):
+    if np.random.random() < p:       
+        gamma=np.random.uniform(g,g+1)
+        image=np.power(image/255.,(gamma))   
+    return (np.clip(image,0.0,1.0)*255).astype(np.uint8)
+
+def randomnoise(image,mean=0,std=0.001,p=0.7):                   
+    if np.random.random() < p :
+        row,col,ch= image.shape
+        sigma = np.random.uniform(std,std*10)#min(np.random.random()/10,0.04)
+        gauss = np.random.normal(mean,sigma,(row,col,ch))
+        gauss = gauss.reshape(row,col,ch)
+        image = image/255. + gauss
+    return (np.clip(image,0.0,1.0)*255).astype(np.uint8)

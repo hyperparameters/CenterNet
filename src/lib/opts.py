@@ -127,18 +127,18 @@ class opts(object):
     self.parser.add_argument('--not_rand_crop', action='store_true',
                              help='not use the random crop data augmentation'
                                   'from CornerNet.')
-    self.parser.add_argument('--shift', type=float, default=0.1,
+    self.parser.add_argument('--shift', type=float, default=0.2,
                              help='when not using random crop'
                                   'apply shift augmentation.')
     self.parser.add_argument('--scale', type=float, default=0.4,
                              help='when not using random crop'
                                   'apply scale augmentation.')
-    self.parser.add_argument('--rotate', type=float, default=0,
+    self.parser.add_argument('--rotate', type=float, default=0.2,
                              help='when not using random crop'
                                   'apply rotation augmentation.')
     self.parser.add_argument('--flip', type = float, default=0.5,
                              help='probability of applying flip augmentation.')
-    self.parser.add_argument('--no_color_aug', action='store_true',
+    self.parser.add_argument('--no_color_aug', action='store_false',
                              help='not use the color augmenation '
                                   'from CornerNet')
     # multi_pose
