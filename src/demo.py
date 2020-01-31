@@ -136,7 +136,7 @@ def create_json(result,name):
       det.append({str(bbox[4]) : bbox[:4].tolist()})
 
   #add detections to dictionary
-  detection_json[str(name)] = det
+  detection_json[str(name)] = {"1":det}
 
 
 def show_img(img,win_name = ""):
@@ -176,9 +176,13 @@ def show_imgs(list_imgs,rows,cols,size=(720,1080)):
   show_img(canvas)
 
 def save_json():
-  with open("detections.json","w") as f:
+  with open(outpath+".json","w") as f:
+    
     f.write(json.dumps(detection_json))
     print("json results saved")
+    cmd = "gsutil cp {}.json gs://ml_shared_bucket/tushar/fynd_trak/detections/hummel_mumbai/{}.json".format(outpath,outpath)
+    os.sys(cmd)
+
     
 if __name__ == '__main__':
 
